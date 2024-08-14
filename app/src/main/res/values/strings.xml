@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RenameAppName</string>
+    <string name="replace_me_text_example">I\'m a FAB Button</string>
+    <string name="replace_me_greeting_text">Hello %s!</string>
 </resources>
