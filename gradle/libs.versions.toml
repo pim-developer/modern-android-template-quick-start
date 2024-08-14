@@ -2,7 +2,6 @@
 
 [versions]
 agp = "8.5.1" #androidGradlePlugin
-hiltAndroidCompiler = "2.44"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -11,8 +10,9 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
 composeBom = "2024.06.00" # BOM: automatically adds version to androidx.compose dependencies
-hiltAndroidGradlePlugin = "2.44"
-hilt = "2.50"
+hiltAndroidGradlePlugin = "2.52"
+hiltAndroidCompiler = "2.52"
+hiltAndroid = "2.52"
 hiltNavigationCompose = "1.2.0"
 mongodbRealmKotlin = "1.16.0"
 kotlinXCoroutines = "1.7.0"
@@ -26,7 +26,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 
 #==================== Dependency Injection ====================
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 

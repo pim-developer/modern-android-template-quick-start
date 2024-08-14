@@ -14,15 +14,15 @@ import androidx.compose.ui.platform.LocalContext
 // https://www.figma.com/community/plugin/1034969338659738588/material-theme-builder
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Grey100,
+    secondary = Grey50,
+    tertiary = Grey10
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Grey100,
+    secondary = Grey50,
+    tertiary = Grey10
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
