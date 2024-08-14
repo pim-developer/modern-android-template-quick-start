@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             // An example of how to set a FAB onClick, in a Single Activity App Architecture
-            // pass down the 11setHomeScreenFABButtonOnClick to the necessary screen
+            // pass down the setHomeScreenFABButtonOnClick to the necessary screen
             val (homeScreenFABButtonOnClick, setHomeScreenFABButtonOnClick) = remember {
                 mutableStateOf<(() -> Unit)?>(
                     null
