@@ -45,7 +45,7 @@ renamecompanyname
                 - `ui/` - Contains all UI-related classes and components
                 - `presentation/` - ViewModels for handling UI data
                 - `model/` - Data models
-                - `repository/` - Data management classes
+                - `data/` - Data management classes
                 - `di/` - Dependency Injection class modules
             - `res/` - Resources like layouts, drawables, and strings
         - `test/` - Unit testing files
