@@ -36,8 +36,7 @@ This template follows the official Google best practises [guide](https://develop
 ## Folder Structure
 
 The project structure is organized as follows (seperation of concerns):
-renamecompanyname
-/renameappname
+
 - `app/`
     - `src/`
         - `main/`
@@ -72,4 +71,4 @@ Please feel free to contribute! There are TODO's (see Issues Tab)
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Feel free to use it for your projects.
+This project is licensed under the [MIT License](https://github.com/pim-developer/modern-android-template-quick-start?tab=MIT-1-ov-file). Feel free to use it for your projects.
