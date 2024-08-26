@@ -4,6 +4,8 @@ plugins {
     id("kotlin-kapt") // needed for hilt, TODO: migrate to catalog file for type safety
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.mongodb.realm.kotlin)
+
+    alias(libs.plugins.compose.compiler) // https://developer.android.com/develop/ui/compose/compiler
 }
 
 android {
@@ -105,6 +107,9 @@ dependencies {
 
     //==================== Navigation (Compose) ====================
     implementation(libs.androidx.navigation.compose)
+
+    //==================== Serialization ====================
+    implementation(libs.kotlinx.serialization.core) // Needed at least for type-safe navigation with compose Navigation
 
 }
 

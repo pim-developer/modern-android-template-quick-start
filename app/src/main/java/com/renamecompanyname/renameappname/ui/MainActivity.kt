@@ -4,81 +4,107 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.renamecompanyname.renameappname.R
-import com.renamecompanyname.renameappname.ui.home.HomeScreenRoute
+import androidx.navigation.compose.rememberNavController
+import com.renamecompanyname.renameappname.ui.home.HomeScreenFABButton
+import com.renamecompanyname.renameappname.ui.navigation.NavigationHost
+import com.renamecompanyname.renameappname.ui.navigation.destinations.home.Home
+import com.renamecompanyname.renameappname.ui.navigation.destinations.profile.Profile
+import com.renamecompanyname.renameappname.ui.profile.ProfileScreenFABButton
 import com.renamecompanyname.renameappname.ui.theme.RenameTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+// The only Activity in this App (if using Single-Activity Architecture)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // style status bar here
+        // Style the status bar here.
+        // This by default expands the app's colors to the bottom and top status bar
+        // for a full-screen effect.
         enableEdgeToEdge()
+
         setContent {
 
             // An example of how to set a FAB onClick, in a Single Activity App Architecture
-            // pass down the setHomeScreenFABButtonOnClick to the necessary screen
+            // pass down the setHomeScreenFABButtonOnClick to the necessary screen.
             val (homeScreenFABButtonOnClick, setHomeScreenFABButtonOnClick) = remember {
                 mutableStateOf<(() -> Unit)?>(
                     null
                 )
             }
 
-            Root(homeScreenFabOnClick = homeScreenFABButtonOnClick) {
-                HomeScreenRoute(setHomeScreenFABButtonOnClick = setHomeScreenFABButtonOnClick)
+            val (profileScreenFABButtonOnClick, setProfileScreenFABButtonOnClick) = remember {
+                mutableStateOf<(() -> Unit)?>(
+                    null
+                )
+            }
+
+            val navController = rememberNavController()
+
+            RootComposable(
+                floatingActionButton = FloatingActionButtonHandler(
+                    currentDestination = navController.currentDestination,
+                    homeScreenFABButtonOnClick = homeScreenFABButtonOnClick,
+                    profileScreenFABButtonOnClick = profileScreenFABButtonOnClick
+                ),
+            ) { scaffoldInnerPadding ->
+                NavigationHost(
+                    modifier = Modifier.padding(scaffoldInnerPadding),
+                    navController = navController,
+                    setHomeScreenFABButtonOnClick = setHomeScreenFABButtonOnClick,
+                    setProfileScreenFABButtonOnClick = setProfileScreenFABButtonOnClick
+                )
             }
         }
     }
 }
 
 @Composable
-private fun Root(
+private fun RootComposable(
     modifier: Modifier = Modifier,
-    homeScreenFabOnClick: (() -> Unit)?,
-    rootContent: @Composable () -> Unit
+    floatingActionButton: @Composable (() -> Unit)?,
+    rootContent: @Composable (scaffoldInnerPadding: PaddingValues) -> Unit
 ) {
     RenameTheme {
         Scaffold(
             modifier = modifier.fillMaxSize(),
             floatingActionButton = {
-                ExtendedFloatingActionButton(
-                    onClick = {
-                        homeScreenFabOnClick?.invoke()
-                    },
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.replace_me_text_example),
-                        style = MaterialTheme.typography.titleSmall
-                    )
-                }
+                floatingActionButton?.invoke()
             }
         ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                rootContent()
-            }
+            rootContent(innerPadding)
         }
     }
 }
 
+@Composable
+private fun FloatingActionButtonHandler(
+    currentDestination: Any?,
+    homeScreenFABButtonOnClick: (() -> Unit)?,
+    profileScreenFABButtonOnClick: (() -> Unit)?,
+): @Composable (() -> Unit)? {
+    // fixme: add FAB
+
+    return when (currentDestination) {
+        is Home -> {
+            HomeScreenFABButton(onClick = homeScreenFABButtonOnClick)
+        }
+
+        is Profile -> {
+            ProfileScreenFABButton(onClick = profileScreenFABButtonOnClick)
+        }
+
+        else -> null
+    }
+}
 
 // TODO: add a Preview for the Scaffold / Root composable 

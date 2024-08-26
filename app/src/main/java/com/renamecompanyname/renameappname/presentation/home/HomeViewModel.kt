@@ -1,6 +1,5 @@
 package com.renamecompanyname.renameappname.presentation.home
 
-
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.renamecompanyname.renameappname.domain.ExampleModelObject
@@ -26,8 +25,8 @@ class HomeViewModel @Inject constructor(
 //            )
 
     // EXAMPLE
-    var exampleViewModelState = mutableStateOf(
-        ExampleViewModelState(),
+    var uiState = mutableStateOf(
+        HomeUiState(),
     )
         private set
 
@@ -36,8 +35,8 @@ class HomeViewModel @Inject constructor(
 
             // EXAMPLE
             is HomeViewModelEvent.ExampleEventNewName -> {
-                exampleViewModelState.value =
-                    exampleViewModelState.value.copy(exampleModelObject = ExampleModelObject(event.newName))
+                uiState.value =
+                    uiState.value.copy(exampleModelObject = ExampleModelObject(event.newName))
             }
 
             // EXAMPLE
@@ -55,7 +54,8 @@ class HomeViewModel @Inject constructor(
         data object ExampleEventSaveChanges : HomeViewModelEvent()
     }
 
-    data class ExampleViewModelState(
+    data class HomeUiState(
+        var helloWorld: String = "Hello World",
         var exampleModelObject: ExampleModelObject? = null
     )
 }

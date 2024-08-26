@@ -1,4 +1,4 @@
-package com.renamecompanyname.renameappname.ui.home
+package com.renamecompanyname.renameappname.ui.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,18 +10,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.renamecompanyname.renameappname.R
-import com.renamecompanyname.renameappname.presentation.home.HomeViewModel
+import com.renamecompanyname.renameappname.presentation.profile.ProfileViewModel
 import com.renamecompanyname.renameappname.ui.common.Greeting
 import com.renamecompanyname.renameappname.ui.theme.RenameTheme
 
 @Composable
-fun HomeScreen(
-    homeUiState: HomeViewModel.HomeUiState,
-    onNavigateToProfile: (profileId: String) -> Unit,
+fun ProfileScreen(
+    profileUiState: ProfileViewModel.ProfileUiState,
+    onNavigateToHome: () -> Unit,
 ) {
     Column(
         Modifier
@@ -31,31 +29,27 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Greeting(
-            name = stringResource(
-                id = R.string.replace_me_greeting_text,
-                homeUiState.helloWorld
-            )
-        )
+        Greeting(name = profileUiState.placeHolder)
     }
 }
 
 @Composable
-fun HomeScreenFABButton(onClick: (() -> Unit)?): @Composable() (() -> Unit)? {
+fun profileScreenFABButton(onClick: (() -> Unit)?): @Composable() (() -> Unit)? {
     TODO("Not yet implemented")
 }
 
-//@PreviewScreenSizes
+
 @Preview
 @Composable
-private fun PreviewNewEventDialog() {
+fun PreviewProfileScreen() {
     RenameTheme {
         Surface {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                HomeScreen(homeUiState = HomeViewModel.HomeUiState(), onNavigateToProfile = {})
+
+
             }
         }
     }

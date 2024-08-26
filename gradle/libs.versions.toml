@@ -2,11 +2,12 @@
 
 [versions]
 agp = "8.5.1" #androidGradlePlugin
-kotlin = "1.9.0"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+kotlinxSerializationCore = "1.7.1"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
 composeBom = "2024.06.00" # BOM: automatically adds version to androidx.compose dependencies
@@ -14,9 +15,10 @@ hiltAndroidGradlePlugin = "2.52"
 hiltAndroidCompiler = "2.52"
 hiltAndroid = "2.52"
 hiltNavigationCompose = "1.2.0"
-mongodbRealmKotlin = "1.16.0"
+mongodbRealmKotlin = "2.1.0"
 kotlinXCoroutines = "1.7.0"
-navigationCompose = "2.7.7"
+navigationCompose = "2.8.0-rc01" # TODO: replace when v. >2.8 becomes a stable release!
+kotlinSerialization = "2.0.20"
 
 [libraries]
 #==================== Core ====================
@@ -55,10 +57,17 @@ mongodb-realm-kotlin-library-base = { group = "io.realm.kotlin", name = "library
 #==================== Navigation (Compose) ====================
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
+#==================== Serialization ====================
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroidGradlePlugin" } # Dependency Injection (Dagger Hilt)
-# TODO migrate kotlin-kapt to this catalog file
 mongodb-realm-kotlin =  { id = "io.realm.kotlin", version.ref = "mongodbRealmKotlin" } # Database (MongoDB NoSQL)
+
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" } # https://developer.android.com/develop/ui/compose/compiler
+
+# TODO: migrate kotlin-kapt to this catalog file
+# TODO: migrate kotlin plugins to this catalog file (the version is already defined in this file though)
