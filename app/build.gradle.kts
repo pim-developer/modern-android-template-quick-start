@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.mongodb.realm.kotlin)
 
-    alias(libs.plugins.compose.compiler) // https://developer.android.com/develop/ui/compose/compiler
+    kotlin("plugin.serialization").version(libs.versions.kotlin)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -44,9 +45,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -109,8 +107,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     //==================== Serialization ====================
-    implementation(libs.kotlinx.serialization.core) // Needed at least for type-safe navigation with compose Navigation
-
+    implementation(libs.kotlinx.serialization.json) // Used (also) for type-safe Navigation, to annotate classes with @Serializable, for example
 }
 
 // Needed for hilt

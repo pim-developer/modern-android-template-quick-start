@@ -4,15 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.renamecompanyname.renameappname.presentation.home.HomeViewModel
+import com.renamecompanyname.renameappname.ui.home.HomeScreen
 import com.renamecompanyname.renameappname.ui.home.HomeScreenFABButton
 import com.renamecompanyname.renameappname.ui.navigation.NavigationHost
 import com.renamecompanyname.renameappname.ui.navigation.destinations.home.Home
@@ -35,7 +43,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             // An example of how to set a FAB onClick, in a Single Activity App Architecture
-            // pass down the setHomeScreenFABButtonOnClick to the necessary screen.
+            // pass down the setHomeScreenFABButtonOnClick, the onclick should be set in <ScreenName>Navigation.kt
             val (homeScreenFABButtonOnClick, setHomeScreenFABButtonOnClick) = remember {
                 mutableStateOf<(() -> Unit)?>(
                     null
@@ -50,12 +58,14 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            RootComposable(
-                floatingActionButton = FloatingActionButtonHandler(
-                    currentDestination = navController.currentDestination,
-                    homeScreenFABButtonOnClick = homeScreenFABButtonOnClick,
-                    profileScreenFABButtonOnClick = profileScreenFABButtonOnClick
-                ),
+            RootComposableAsScaffold(
+                currentFloatingActionButton = {
+                    CurrentFloatingActionButton(
+                        currentDestination = navController.currentBackStackEntryAsState().value?.destination,
+                        homeScreenFABButtonOnClick = homeScreenFABButtonOnClick,
+                        profileScreenFABButtonOnClick = profileScreenFABButtonOnClick
+                    )
+                },
             ) { scaffoldInnerPadding ->
                 NavigationHost(
                     modifier = Modifier.padding(scaffoldInnerPadding),
@@ -69,16 +79,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun RootComposable(
+private fun RootComposableAsScaffold(
     modifier: Modifier = Modifier,
-    floatingActionButton: @Composable (() -> Unit)?,
+    currentFloatingActionButton: @Composable () -> Unit,
     rootContent: @Composable (scaffoldInnerPadding: PaddingValues) -> Unit
 ) {
     RenameTheme {
         Scaffold(
             modifier = modifier.fillMaxSize(),
             floatingActionButton = {
-                floatingActionButton?.invoke()
+                currentFloatingActionButton()
             }
         ) { innerPadding ->
             rootContent(innerPadding)
@@ -87,24 +97,40 @@ private fun RootComposable(
 }
 
 @Composable
-private fun FloatingActionButtonHandler(
-    currentDestination: Any?,
+fun CurrentFloatingActionButton(
+    currentDestination: NavDestination?,
     homeScreenFABButtonOnClick: (() -> Unit)?,
     profileScreenFABButtonOnClick: (() -> Unit)?,
-): @Composable (() -> Unit)? {
-    // fixme: add FAB
-
-    return when (currentDestination) {
-        is Home -> {
-            HomeScreenFABButton(onClick = homeScreenFABButtonOnClick)
-        }
-
-        is Profile -> {
-            ProfileScreenFABButton(onClick = profileScreenFABButtonOnClick)
-        }
-
-        else -> null
+) {
+    if (currentDestination?.hasRoute(Home::class) == true) {
+        HomeScreenFABButton(onClick = homeScreenFABButtonOnClick ?: {})
+    } else if (currentDestination?.hasRoute(Profile::class) == true) {
+        ProfileScreenFABButton(onClick = profileScreenFABButtonOnClick ?: {})
+    } else {
+        /* no-op */
     }
 }
 
-// TODO: add a Preview for the Scaffold / Root composable 
+
+@Preview
+@Composable
+fun PreviewRootComposable() {
+    RenameTheme {
+        Surface {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                RootComposableAsScaffold(currentFloatingActionButton = {
+                    HomeScreenFABButton {
+
+                    }
+                }) {
+                    HomeScreen(homeUiState = HomeViewModel.HomeUiState()) {
+
+                    }
+                }
+            }
+        }
+    }
+}

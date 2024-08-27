@@ -12,11 +12,10 @@ import com.renamecompanyname.renameappname.ui.home.HomeScreen
 import kotlinx.serialization.Serializable
 
 // Encapsulation 👍
-// - Keeps screens logic seperate from Navhost
+// - Keeps screens logic separate from NavHost
 // - Define extension functions, here, for navigating to the destination, and defining the route (NavGraphBuilder)
 // - More good reasons...
 // https://developer.android.com/guide/navigation/design/encapsulate
-
 
 // Route without arguments: use object
 @Serializable
@@ -28,7 +27,7 @@ fun NavController.navigateToHome() {
 
 fun NavGraphBuilder.homeDestination(
     onNavigateToProfile: (profileId: String) -> Unit,
-    setHomeScreenFABButtonOnClick: (() -> Unit) -> Unit
+    setHomeScreenFABOnClick: (() -> Unit) -> Unit
 ) {
     composable<Home> {
         // The ViewModel as a screen level state holder produces the screen
@@ -40,11 +39,12 @@ fun NavGraphBuilder.homeDestination(
 
         // EXAMPLE: setting the onClick of a FAB passed down from the root composable
         LaunchedEffect(Unit) {
-            setHomeScreenFABButtonOnClick {
+            setHomeScreenFABOnClick {
                 // EXAMPLE: vibration haptic feedback onclick
                 haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
 
                 // add onclick here...
+                onNavigateToProfile(viewModel.uiState.value.profileId)
             }
         }
 

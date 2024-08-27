@@ -1,6 +1,8 @@
 package com.renamecompanyname.renameappname.presentation.profile
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.renamecompanyname.renameappname.presentation.profile.ProfileViewModel.ProfileUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -8,6 +10,12 @@ import javax.inject.Inject
 class EditProfileViewModel @Inject constructor(
 
 ) : ViewModel() {
+
+    // EXAMPLE
+    var uiState = mutableStateOf(
+        EditProfileState(),
+    )
+        private set
 
 
     fun onEvent(event: EditProfileEvent) {
@@ -24,10 +32,8 @@ class EditProfileViewModel @Inject constructor(
     }
 
     data class EditProfileState(
-        val submissionLoading: Boolean? = false,
+        var screenName: String = "Edit Profile Screen",
     ) {
-        fun hasErrors(): Boolean {
-            return (submissionLoading != null && submissionLoading)
-        }
+
     }
 }

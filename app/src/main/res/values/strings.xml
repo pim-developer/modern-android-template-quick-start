@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">RenameAppName</string>
-    <string name="replace_me_text_example">I\'m a FAB Button</string>
-    <string name="replace_me_greeting_text">This is a %s!</string>
-    <string name="example_profile_screen_text">I\'m on the Profile Screen!</string>
+    <string name="screen_greeting_text">You\'re on page %s</string>
+    <string name="fab_text_navigate_to_profile">Go to Profile</string>
+    <string name="fab_text_navigate_to_home">Go to Home</string>
+    <string name="navigate_to_profile_btn_text">Navigate to Profile</string>
+    <string name="navigate_to_edit_profile_btn_text">Navigate to Edit Profile</string>
+
 </resources>

@@ -31,7 +31,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     data class ProfileUiState(
-        val placeHolder: String = "I'm on the Profile Screen!"
+        var screenName: String = "Profile Screen",
     ) {
 
     }

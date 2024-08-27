@@ -55,7 +55,8 @@ class HomeViewModel @Inject constructor(
     }
 
     data class HomeUiState(
-        var helloWorld: String = "Hello World",
+        var screenName: String = "Home Screen",
+        var profileId: String = "1",
         var exampleModelObject: ExampleModelObject? = null
     )
 }
