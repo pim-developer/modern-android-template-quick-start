@@ -106,6 +106,14 @@ dependencies {
     //==================== Navigation (Compose) ====================
     implementation(libs.androidx.navigation.compose)
 
+    //==================== In-App Updates ====================
+    // This dependency is downloaded from the Google’s Maven repository.
+    // So, make sure you also include that repository in your project's build.gradle file.
+    implementation(libs.app.update)
+
+    // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
+    implementation(libs.app.update.ktx)
+
 }
 
 // Needed for hilt
