@@ -41,7 +41,7 @@ The project structure is organized as follows (seperation of concerns):
     - `src/`
         - `main/`
             - `java/com/renamecompanyname/renameappname`
-                - `ui/` - Contains all UI-related classes and components
+                - `ui/` - Contains all UI-related stuff; Screens, [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation)
                 - `presentation/` - ViewModels for handling UI data
                 - `model/` - Data models
                 - `data/` - Data management classes
@@ -52,13 +52,13 @@ The project structure is organized as follows (seperation of concerns):
 
 ## Included Dependencies
 
-- [**MongoDB**](https://www.mongodb.com/docs/atlas/device-sdks/sdk/kotlin/)  (Database) - MongoDB offers a nice free tier for [BAAS](https://www.mongodb.com/products/platform/atlas-database). Easily replace with [Room](https://developer.android.com/jetpack/androidx/releases/room) if you prefer.
-- [**Hilt**](https://developer.android.com/training/dependency-injection/hilt-android) (Dependency Injection) - For a future proof maintainable codebase.
-- **Compose Navigation** - To handle in-app navigation using Jetpack Compose.
-- **Jetpack Compose** - For modern UI development.
+- [**MongoDB**](https://www.mongodb.com/docs/atlas/device-sdks/sdk/kotlin/) - NoSQL Database MongoDB, note there is a nice free tier for a MongoDB [BAAS](https://www.mongodb.com/products/platform/atlas-database). Easily replace with [Room](https://developer.android.com/jetpack/androidx/releases/room) if you prefer.
+- [**Hilt**](https://developer.android.com/training/dependency-injection/hilt-android) -  Hilt Dependency Injection for a future-proof maintainable codebase.
+- **[Compose Navigation](https://developer.android.com/develop/ui/compose/navigation)** - Up-to-date Official Jetpack Compose Type-Safe Navigation.
+- **Jetpack Compose** - The Official Android Declarative UI-Kit.
 - **Material 3** - The latest version of Material Design.
-- **Firebase Crashlytics** (Planned) - For crash reporting.
-- **In-App Updates** (Planned) - For updating app code automatically.
+- **Firebase Crashlytics** _(Planned)_ - For crash reporting.
+- **In-App Updates** _(Planned)_ - For updating app code automatically.
 
 
 ### Version Catalog

@@ -10,29 +10,31 @@ import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 
 
-// ---------------------------------------------------------------------------
-// For more information, visit:
-// https://developer.android.com/guide/playcore/in-app-updates/kotlin-java
-//
-// Example usage in MainActivity.kt:
-//
-// Before the setContent method, you can set up the app update manager like this:
-//
-// val appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
-// checkAndInitiateFlexibleAppUpdate(
-//     appUpdateManager = appUpdateManager,
-//     launcher = registerForActivityResult(
-//         contract = ActivityResultContracts.StartIntentSenderForResult(),
-//         callback = { /* no-op - cancellation */ }
-//     ),
-//     onShowAppUpdater = { isAppUpdaterVisible = true }
-// )
-
-// Call to complete:
-// appUpdateManager.completeUpdate()
-//
-// ---------------------------------------------------------------------------
-
+/**
+ * For more information, visit:
+ * [In-App Updates Documentation](https://developer.android.com/guide/playcore/in-app-updates/kotlin-java)
+ *
+ * Example usage in MainActivity.kt:
+ *
+ * Before the setContent method, you can set up the app update manager like this:
+ *
+ * ```kotlin
+ * val appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+ * checkAndInitiateFlexibleAppUpdate(
+ *     appUpdateManager = appUpdateManager,
+ *     launcher = registerForActivityResult(
+ *         contract = ActivityResultContracts.StartIntentSenderForResult(),
+ *         callback = { /* no-op - cancellation */ }
+ *     ),
+ *     onShowAppUpdater = { isAppUpdaterVisible = true }
+ * )
+ * ```
+ *
+ * Call to complete:
+ * ```kotlin
+ * appUpdateManager.completeUpdate()
+ * ```
+ */
 fun checkAndInitiateFlexibleAppUpdate(
     appUpdateManager: AppUpdateManager,
     launcher: ActivityResultLauncher<IntentSenderRequest>,
