@@ -2,12 +2,21 @@ package com.renamecompanyname.renameappname.ui.utils
 
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.renamecompanyname.renameappname.R
+import kotlinx.coroutines.launch
 
 
 /**
@@ -34,6 +43,9 @@ import com.google.android.play.core.install.model.UpdateAvailability
  * ```kotlin
  * appUpdateManager.completeUpdate()
  * ```
+ * 
+ * You can use the [AppUpdaterSnackBar] to notify user
+
  */
 fun checkAndInitiateFlexibleAppUpdate(
     appUpdateManager: AppUpdateManager,
@@ -102,6 +114,37 @@ fun checkAndInitiateFlexibleAppUpdate(
         // notify the user to complete the update.
         if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
             onShowAppUpdater()
+        }
+    }
+}
+
+@Composable
+fun AppUpdaterSnackBar(
+    isVisible: Boolean,
+    snackBarHostState: SnackbarHostState,
+    onCompleteUpdate: () -> Unit
+) {
+    val scope = rememberCoroutineScope()
+
+    val message = stringResource(id = R.string.update_has_downloaded_msg)
+    val actionLabel = stringResource(id = R.string.update_has_downloaded_action_msg)
+
+    LaunchedEffect(isVisible) {
+        if (isVisible) {
+            scope.launch {
+                val result = snackBarHostState.showSnackbar(
+                    message = message,
+                    actionLabel = actionLabel,
+                    duration = SnackbarDuration.Indefinite,
+                    withDismissAction = true
+                )
+
+                when (result) {
+                    SnackbarResult.ActionPerformed -> onCompleteUpdate()
+                    SnackbarResult.Dismissed -> { /* No action needed */
+                    }
+                }
+            }
         }
     }
 }

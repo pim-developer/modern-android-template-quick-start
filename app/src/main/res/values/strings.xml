@@ -6,4 +6,7 @@
     <string name="navigate_to_profile_btn_text">Navigate to Profile</string>
     <string name="navigate_to_edit_profile_btn_text">Navigate to Edit Profile</string>
 
+    <string name="update_has_downloaded_msg">An update has just been downloaded.</string>
+    <string name="update_has_downloaded_action_msg">RESTART</string>
+
 </resources>
