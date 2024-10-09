@@ -58,7 +58,7 @@ The project structure is organized as follows (seperation of concerns):
 - **Jetpack Compose** - The Official Android Declarative UI-Kit.
 - **Material 3** - The latest version of Material Design.
 - **Firebase Crashlytics** _(Planned)_ - For crash reporting.
-- **In-App Updates** _(Planned)_ - For updating app code automatically.
+- **In-App Updates** - code in ui/utils/AppUpdater.kt 
 
 
 ### Version Catalog
