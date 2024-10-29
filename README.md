@@ -59,6 +59,7 @@ The project structure is organized as follows (seperation of concerns):
 - **Material 3** - The latest version of Material Design.
 - **Firebase Crashlytics** _(Planned)_ - For crash reporting.
 - **In-App Updates** _(Planned)_ - For updating app code automatically.
+- **KtLint** - For code quality.
 
 
 ### Version Catalog

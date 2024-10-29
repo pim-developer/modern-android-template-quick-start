@@ -1,25 +1,41 @@
 #https://developer.android.com/build/migrate-to-catalogs#kts
 
 [versions]
+#==================== Core ====================
 agp = "8.5.2" #androidGradlePlugin
-appUpdate = "2.1.0"
 kotlin = "2.0.20"
-kotlinxSerializationJson = "1.7.1"
-kotlinXCoroutines = "1.8.0"
 coreKtx = "1.13.1"
-lifecycleRuntimeKtx = "2.8.4"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-activityCompose = "1.9.1"
-composeBom = "2024.08.00" # BOM: automatically adds version to androidx.compose dependencies
-navigationCompose = "2.8.0-rc01" # TODO: replace when v. >2.8 becomes a stable release!
+lifecycleRuntimeKtx = "2.8.6"
+
+#==================== Compose & UI ====================
+activityCompose = "1.9.3"
+composeBom = "2024.10.00" # BOM: automatically adds version to androidx.compose dependencies
+navigationCompose = "2.8.3" # TODO: replace when v. >2.8 becomes a stable release!
+
+#==================== Dependency Injection ====================
 hiltAndroidGradlePlugin = "2.52"
 hiltAndroidCompiler = "2.52"
 hiltAndroid = "2.52"
 hiltNavigationCompose = "1.2.0"
+
+#==================== Testing ====================
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+
+#==================== CoRoutines ====================
+kotlinXCoroutines = "1.8.0"
+
+#==================== Database ====================
 mongodbRealmKotlin = "2.1.0"
-# Code Quality
+
+#==================== Serialization ====================
+kotlinxSerializationJson = "1.7.1"
+
+#==================== In-app Updates ====================
+appUpdate = "2.1.0"
+
+#==================== Code Quality ====================
 ktlint = "12.1.1"
 
 [libraries]
