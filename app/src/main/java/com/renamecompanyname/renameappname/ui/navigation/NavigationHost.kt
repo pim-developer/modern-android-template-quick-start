@@ -31,13 +31,13 @@ fun NavigationHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Home
+        startDestination = Home,
     ) {
         homeDestination(
             onNavigateToProfile = { profileId ->
                 navController.navigateToProfileGraph(profileId)
             },
-            setHomeScreenFABOnClick = setHomeScreenFABButtonOnClick
+            setHomeScreenFABOnClick = setHomeScreenFABButtonOnClick,
         )
 
         navigation<ProfileGraph>(startDestination = Profile(id = "this_will_be_ignored")) {
@@ -48,13 +48,13 @@ fun NavigationHost(
                 onNavigateToEditProfile = {
                     navController.navigateToEditProfile(it)
                 },
-                setProfileScreenFABOnClick = setProfileScreenFABButtonOnClick
+                setProfileScreenFABOnClick = setProfileScreenFABButtonOnClick,
             )
 
             editProfileDestination(
                 onNavigateToProfile = {
                     navController.navigateToProfile(it)
-                }
+                },
             )
         }
     }
@@ -63,7 +63,6 @@ fun NavigationHost(
 internal sealed class NestedGraphs {
     @Serializable
     internal data class ProfileGraph(val id: String = "")
-
 }
 
 internal fun NavController.navigateToProfileGraph(id: String) {

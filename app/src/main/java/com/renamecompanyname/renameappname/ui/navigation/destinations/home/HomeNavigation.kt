@@ -27,7 +27,7 @@ fun NavController.navigateToHome() {
 
 fun NavGraphBuilder.homeDestination(
     onNavigateToProfile: (profileId: String) -> Unit,
-    setHomeScreenFABOnClick: (() -> Unit) -> Unit
+    setHomeScreenFABOnClick: (() -> Unit) -> Unit,
 ) {
     composable<Home> {
         // The ViewModel as a screen level state holder produces the screen
@@ -54,4 +54,3 @@ fun NavGraphBuilder.homeDestination(
         )
     }
 }
-

@@ -19,6 +19,8 @@ hiltAndroidCompiler = "2.52"
 hiltAndroid = "2.52"
 hiltNavigationCompose = "1.2.0"
 mongodbRealmKotlin = "2.1.0"
+# Code Quality
+ktlint = "12.1.1"
 
 [libraries]
 #==================== Core ====================
@@ -74,6 +76,8 @@ mongodb-realm-kotlin = { id = "io.realm.kotlin", version.ref = "mongodbRealmKotl
 #https://android-developers.googleblog.com/2024/04/jetpack-compose-compiler-moving-to-kotlin-repository.html
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
+# Code quality
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 # TODO: migrate kotlin-kapt to this catalog file
 # TODO: migrate kotlin plugins to this catalog file (the version is already defined in this file though)

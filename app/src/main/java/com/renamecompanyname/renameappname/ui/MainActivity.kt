@@ -41,29 +41,33 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-
             // An example of how to set a FAB onClick, in a Single Activity App Architecture
             // pass down the setHomeScreenFABButtonOnClick, the onclick should be set in <ScreenName>Navigation.kt
-            val (homeScreenFABButtonOnClick, setHomeScreenFABButtonOnClick) = remember {
-                mutableStateOf<(() -> Unit)?>(
-                    null
-                )
-            }
+            val (homeScreenFABButtonOnClick, setHomeScreenFABButtonOnClick) =
+                remember {
+                    mutableStateOf<(() -> Unit)?>(
+                        null,
+                    )
+                }
 
-            val (profileScreenFABButtonOnClick, setProfileScreenFABButtonOnClick) = remember {
-                mutableStateOf<(() -> Unit)?>(
-                    null
-                )
-            }
+            val (profileScreenFABButtonOnClick, setProfileScreenFABButtonOnClick) =
+                remember {
+                    mutableStateOf<(() -> Unit)?>(
+                        null,
+                    )
+                }
 
             val navController = rememberNavController()
 
             RootComposableAsScaffold(
                 currentFloatingActionButton = {
                     CurrentFloatingActionButton(
-                        currentDestination = navController.currentBackStackEntryAsState().value?.destination,
+                        currentDestination = navController
+                            .currentBackStackEntryAsState()
+                            .value
+                            ?.destination,
                         homeScreenFABButtonOnClick = homeScreenFABButtonOnClick,
-                        profileScreenFABButtonOnClick = profileScreenFABButtonOnClick
+                        profileScreenFABButtonOnClick = profileScreenFABButtonOnClick,
                     )
                 },
             ) { scaffoldInnerPadding ->
@@ -71,7 +75,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.padding(scaffoldInnerPadding),
                     navController = navController,
                     setHomeScreenFABButtonOnClick = setHomeScreenFABButtonOnClick,
-                    setProfileScreenFABButtonOnClick = setProfileScreenFABButtonOnClick
+                    setProfileScreenFABButtonOnClick = setProfileScreenFABButtonOnClick,
                 )
             }
         }
@@ -82,14 +86,14 @@ class MainActivity : ComponentActivity() {
 private fun RootComposableAsScaffold(
     modifier: Modifier = Modifier,
     currentFloatingActionButton: @Composable () -> Unit,
-    rootContent: @Composable (scaffoldInnerPadding: PaddingValues) -> Unit
+    rootContent: @Composable (scaffoldInnerPadding: PaddingValues) -> Unit,
 ) {
     RenameTheme {
         Scaffold(
             modifier = modifier.fillMaxSize(),
             floatingActionButton = {
                 currentFloatingActionButton()
-            }
+            },
         ) { innerPadding ->
             rootContent(innerPadding)
         }
@@ -107,10 +111,9 @@ fun CurrentFloatingActionButton(
     } else if (currentDestination?.hasRoute(Profile::class) == true) {
         ProfileScreenFABButton(onClick = profileScreenFABButtonOnClick ?: {})
     } else {
-        /* no-op */
+        // no-op
     }
 }
-
 
 @Preview
 @Composable
@@ -118,16 +121,15 @@ fun PreviewRootComposable() {
     RenameTheme {
         Surface {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier =
+                Modifier
+                    .fillMaxSize(),
             ) {
                 RootComposableAsScaffold(currentFloatingActionButton = {
                     HomeScreenFABButton {
-
                     }
                 }) {
                     HomeScreen(homeUiState = HomeViewModel.HomeUiState()) {
-
                     }
                 }
             }

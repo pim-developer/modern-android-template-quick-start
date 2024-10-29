@@ -21,7 +21,6 @@ import com.renamecompanyname.renameappname.ui.common.CustomButton
 import com.renamecompanyname.renameappname.ui.common.ScreenGreeting
 import com.renamecompanyname.renameappname.ui.theme.RenameTheme
 
-
 @Composable
 fun EditProfileScreen(
     editProfileUiState: EditProfileViewModel.EditProfileState,
@@ -33,7 +32,7 @@ fun EditProfileScreen(
             .background(color = MaterialTheme.colorScheme.background)
             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         ScreenGreeting(screenName = editProfileUiState.screenName)
 
@@ -51,12 +50,12 @@ fun PreviewEditProfileScreen() {
     RenameTheme {
         Surface {
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .background(color = MaterialTheme.colorScheme.background)
-                    .fillMaxSize()
+                    .fillMaxSize(),
             ) {
                 EditProfileScreen(editProfileUiState = EditProfileViewModel.EditProfileState()) {
-
                 }
             }
         }

@@ -18,7 +18,6 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.renamecompanyname.renameappname.R
 import kotlinx.coroutines.launch
 
-
 /**
  * For more information, visit:
  * [In-App Updates Documentation](https://developer.android.com/guide/playcore/in-app-updates/kotlin-java)
@@ -43,14 +42,14 @@ import kotlinx.coroutines.launch
  * ```kotlin
  * appUpdateManager.completeUpdate()
  * ```
- * 
+ *
  * You can use the [AppUpdaterSnackBar] to notify user
 
  */
 fun checkAndInitiateFlexibleAppUpdate(
     appUpdateManager: AppUpdateManager,
     launcher: ActivityResultLauncher<IntentSenderRequest>,
-    onShowAppUpdater: () -> Unit
+    onShowAppUpdater: () -> Unit,
 ) {
     // Returns an intent object that you use to check for an update.
     val appUpdateInfoTask = appUpdateManager.appUpdateInfo
@@ -122,7 +121,7 @@ fun checkAndInitiateFlexibleAppUpdate(
 fun AppUpdaterSnackBar(
     isVisible: Boolean,
     snackBarHostState: SnackbarHostState,
-    onCompleteUpdate: () -> Unit
+    onCompleteUpdate: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
@@ -132,16 +131,17 @@ fun AppUpdaterSnackBar(
     LaunchedEffect(isVisible) {
         if (isVisible) {
             scope.launch {
-                val result = snackBarHostState.showSnackbar(
-                    message = message,
-                    actionLabel = actionLabel,
-                    duration = SnackbarDuration.Indefinite,
-                    withDismissAction = true
-                )
+                val result =
+                    snackBarHostState.showSnackbar(
+                        message = message,
+                        actionLabel = actionLabel,
+                        duration = SnackbarDuration.Indefinite,
+                        withDismissAction = true,
+                    )
 
                 when (result) {
                     SnackbarResult.ActionPerformed -> onCompleteUpdate()
-                    SnackbarResult.Dismissed -> { /* No action needed */
+                    SnackbarResult.Dismissed -> { // No action needed
                     }
                 }
             }

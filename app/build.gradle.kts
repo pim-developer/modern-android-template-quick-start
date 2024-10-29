@@ -7,6 +7,7 @@ plugins {
 
     kotlin("plugin.serialization").version(libs.versions.kotlin)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -31,7 +32,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -55,13 +56,13 @@ android {
 
 dependencies {
 
-    //==================== Core ====================
+    // ==================== Core ====================
     // The ktx library for Android provides Kotlin extensions that make Android development
     // more concise, idiomatic, and pleasant by leveraging Kotlin's features.
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    //==================== Dependency Injection ====================
+    // ==================== Dependency Injection ====================
     // Dagger Hilt https://developer.android.com/training/dependency-injection/hilt-android#kts
     // Needs Kapt
     implementation(libs.hilt.android)
@@ -69,8 +70,7 @@ dependencies {
 
     kapt(libs.hilt.android.compiler)
 
-
-    //==================== Testing ====================
+    // ==================== Testing ====================
     testImplementation(libs.junit)
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -78,7 +78,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    //==================== Compose & UI ====================
+    // ==================== Compose & UI ====================
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.ui)
@@ -89,38 +89,44 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //==================== Networking ====================
+    // ==================== Networking ====================
     // TODO: add networking dependencies
 
-    //==================== Database ====================
+    // ==================== Database ====================
     // For a free tier online DB with sync capabilities,
     // add device-sync dependency, see: https://www.mongodb.com/docs/atlas/device-sdks/sdk/kotlin/install/#std-label-kotlin-install-android
 
     // MongoDB Local-Only Realm SDK
     implementation(libs.mongodb.realm.kotlin.library.base)
 
-    //==================== CoRoutines ====================
+    // ==================== CoRoutines ====================
     // Need this to use coroutines with the MongoDB Realm SDK (among other use cases)
     implementation(libs.kotlinx.coroutines)
 
-    //==================== Navigation (Compose) ====================
+    // ==================== Navigation (Compose) ====================
     implementation(libs.androidx.navigation.compose)
 
-    //==================== Serialization ====================
-    implementation(libs.kotlinx.serialization.json) // Used (also) for type-safe Navigation, to annotate classes with @Serializable, for example
+    // ==================== Serialization ====================
+    implementation(
+        libs.kotlinx.serialization.json,
+    ) // Used (also) for type-safe Navigation, to annotate classes with @Serializable, for example
 
-    //==================== In-App Updates ====================
+    // ==================== In-App Updates ====================
     // This dependency is downloaded from the Google’s Maven repository.
     // So, make sure you also include that repository in your project's build.gradle file.
     implementation(libs.app.update)
 
     // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
     implementation(libs.app.update.ktx)
-
 }
 
 // Needed for hilt
 // Allow references to generated code:
 kapt {
     correctErrorTypes = true
+}
+
+ktlint {
+    android.set(true)
+    outputColorName.set("RED")
 }

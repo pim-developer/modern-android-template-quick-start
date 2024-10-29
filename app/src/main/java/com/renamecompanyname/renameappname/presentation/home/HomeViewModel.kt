@@ -7,12 +7,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel
+@Inject
+constructor(
 //     EXAMPLE repository dependency injection
 //    private val repository: Repository
 ) : ViewModel() {
-
-//     EXAMPLE reading and sorting a list from repository
+    //     EXAMPLE reading and sorting a list from repository
 //    val eventsFeedState: StateFlow<List<ModelObject>> =
 //        repository.readSomeEvents()
 //            .map { events ->
@@ -25,14 +26,14 @@ class HomeViewModel @Inject constructor(
 //            )
 
     // EXAMPLE
-    var uiState = mutableStateOf(
-        HomeUiState(),
-    )
+    var uiState =
+        mutableStateOf(
+            HomeUiState(),
+        )
         private set
 
     fun onEvent(event: HomeViewModelEvent) {
         when (event) {
-
             // EXAMPLE
             is HomeViewModelEvent.ExampleEventNewName -> {
                 uiState.value =
@@ -41,7 +42,6 @@ class HomeViewModel @Inject constructor(
 
             // EXAMPLE
             is HomeViewModelEvent.ExampleEventSaveChanges -> {
-
             }
         }
     }
@@ -57,6 +57,6 @@ class HomeViewModel @Inject constructor(
     data class HomeUiState(
         var screenName: String = "Home Screen",
         var profileId: String = "1",
-        var exampleModelObject: ExampleModelObject? = null
+        var exampleModelObject: ExampleModelObject? = null,
     )
 }

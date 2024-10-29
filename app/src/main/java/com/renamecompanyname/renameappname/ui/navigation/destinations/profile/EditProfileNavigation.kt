@@ -16,9 +16,7 @@ internal fun NavController.navigateToEditProfile(id: String) {
     navigate(route = EditProfile(id = id))
 }
 
-internal fun NavGraphBuilder.editProfileDestination(
-    onNavigateToProfile: (id: String) -> Unit,
-) {
+internal fun NavGraphBuilder.editProfileDestination(onNavigateToProfile: (id: String) -> Unit) {
     composable<EditProfile> { navBackStackEntry ->
         val editProfile: EditProfile = navBackStackEntry.toRoute() // get arguments from route
 
@@ -26,7 +24,7 @@ internal fun NavGraphBuilder.editProfileDestination(
 
         EditProfileScreen(
             editProfileUiState = viewModel.uiState.value,
-            onNavigateToProfile = { onNavigateToProfile(editProfile.id) }
+            onNavigateToProfile = { onNavigateToProfile(editProfile.id) },
         )
     }
 }

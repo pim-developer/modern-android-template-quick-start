@@ -1,7 +1,6 @@
 package com.renamecompanyname.renameappname.ui.common
 
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -14,14 +13,16 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 fun CustomButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     val haptic = LocalHapticFeedback.current
     Button(
-        colors = ButtonDefaults.buttonColors().copy(
+        colors =
+        ButtonDefaults.buttonColors().copy(
             containerColor = MaterialTheme.colorScheme.onBackground,
-            contentColor = MaterialTheme.colorScheme.background
+            contentColor = MaterialTheme.colorScheme.background,
         ),
         onClick = {
             haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             onClick()
-        }) {
+        },
+    ) {
         Text(text = text, style = MaterialTheme.typography.titleSmall)
     }
 }

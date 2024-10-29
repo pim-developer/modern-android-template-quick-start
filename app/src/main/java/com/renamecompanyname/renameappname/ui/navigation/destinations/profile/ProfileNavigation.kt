@@ -29,7 +29,7 @@ internal fun NavController.navigateToProfile(id: String) {
 internal fun NavGraphBuilder.profileDestination(
     onNavigateToHome: () -> Unit,
     onNavigateToEditProfile: (id: String) -> Unit,
-    setProfileScreenFABOnClick: (() -> Unit) -> Unit
+    setProfileScreenFABOnClick: (() -> Unit) -> Unit,
 ) {
     composable<Profile> { navBackStackEntry ->
         val profileId = navBackStackEntry.toRoute<Profile>().id
@@ -40,7 +40,6 @@ internal fun NavGraphBuilder.profileDestination(
 
         // EXAMPLE: vibration haptic feedback onclick
         val haptic = LocalHapticFeedback.current
-
 
         // EXAMPLE: setting the onClick of a FAB passed down from the root composable
         LaunchedEffect(Unit) {
@@ -55,7 +54,7 @@ internal fun NavGraphBuilder.profileDestination(
 
         ProfileScreen(
             profileUiState = viewModel.uiState.value,
-            onNavigateToEditProfile = { onNavigateToEditProfile(profileId) }
+            onNavigateToEditProfile = { onNavigateToEditProfile(profileId) },
         )
     }
 }

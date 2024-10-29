@@ -11,7 +11,6 @@ import dagger.hilt.android.HiltAndroidApp
 // Must be annotated with @HiltAndroidApp to work with Hilt Dependency Injection.
 @HiltAndroidApp
 class Application : Application() {
-
     override fun onCreate() {
         super.onCreate()
     }

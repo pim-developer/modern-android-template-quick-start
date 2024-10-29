@@ -34,7 +34,7 @@ fun ProfileScreen(
             .background(color = MaterialTheme.colorScheme.background)
             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         ScreenGreeting(screenName = profileUiState.screenName)
 
@@ -51,7 +51,7 @@ fun ProfileScreenFABButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
         contentColor = MaterialTheme.colorScheme.background,
         containerColor = MaterialTheme.colorScheme.onBackground,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Text(text = stringResource(id = R.string.fab_text_navigate_to_home))
     }
@@ -63,11 +63,11 @@ fun PreviewProfileScreen() {
     RenameTheme {
         Surface {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier =
+                Modifier
+                    .fillMaxSize(),
             ) {
                 ProfileScreen(profileUiState = ProfileViewModel.ProfileUiState()) {
-
                 }
             }
         }
