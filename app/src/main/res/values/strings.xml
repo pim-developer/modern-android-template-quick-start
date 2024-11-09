@@ -8,5 +8,6 @@
 
     <string name="update_has_downloaded_msg">An update has just been downloaded.</string>
     <string name="update_has_downloaded_action_msg">RESTART</string>
+    <string name="rare_generic_error_message">Oops...</string>
 
 </resources>

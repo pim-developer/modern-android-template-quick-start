@@ -22,10 +22,7 @@ import com.renamecompanyname.renameappname.ui.common.ScreenGreeting
 import com.renamecompanyname.renameappname.ui.theme.RenameTheme
 
 @Composable
-fun HomeScreen(
-    homeUiState: HomeViewModel.HomeUiState,
-    onNavigateToProfile: (profileId: String) -> Unit,
-) {
+fun HomeScreen(uiState: HomeViewModel.UiState, onNavigateToProfile: (profileId: String) -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -35,7 +32,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         ScreenGreeting(
-            screenName = homeUiState.screenName,
+            screenName = "Home",
         )
     }
 }
@@ -72,7 +69,8 @@ private fun PreviewHomeScreen() {
                         .fillMaxSize()
                         .padding(innerPadding),
                 ) {
-                    HomeScreen(homeUiState = HomeViewModel.HomeUiState(), onNavigateToProfile = {})
+                    HomeScreen(uiState = HomeViewModel.UiState.Success) {
+                    }
                 }
             }
         }

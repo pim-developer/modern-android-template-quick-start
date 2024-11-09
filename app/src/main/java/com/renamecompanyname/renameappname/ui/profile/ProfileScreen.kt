@@ -20,12 +20,14 @@ import androidx.compose.ui.unit.dp
 import com.renamecompanyname.renameappname.R
 import com.renamecompanyname.renameappname.presentation.profile.ProfileViewModel
 import com.renamecompanyname.renameappname.ui.common.CustomButton
-import com.renamecompanyname.renameappname.ui.common.ScreenGreeting
 import com.renamecompanyname.renameappname.ui.theme.RenameTheme
 
 @Composable
 fun ProfileScreen(
-    profileUiState: ProfileViewModel.ProfileUiState,
+    uiState: ProfileViewModel.UiState.Success,
+    onCreateUserClick: () -> Unit,
+    onGetAllUsersClick: () -> Unit,
+    onDeleteAllUsersClick: () -> Unit,
     onNavigateToEditProfile: () -> Unit,
 ) {
     Column(
@@ -36,9 +38,34 @@ fun ProfileScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ScreenGreeting(screenName = profileUiState.screenName)
+        uiState.users.forEach {
+            Text(
+                modifier = Modifier,
+                text = "name: ${it.name}, id: ${it.id}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
 
         Spacer(modifier = Modifier.size(16.dp))
+
+        CustomButton(text = "Create User") {
+            onCreateUserClick()
+        }
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        CustomButton(text = "Get All Users") {
+            onGetAllUsersClick()
+        }
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        CustomButton(text = "Delete All Users") {
+            onDeleteAllUsersClick()
+        }
+
+        Spacer(modifier = Modifier.size(48.dp))
 
         CustomButton(text = stringResource(id = R.string.navigate_to_edit_profile_btn_text)) {
             onNavigateToEditProfile()
@@ -67,8 +94,13 @@ fun PreviewProfileScreen() {
                 Modifier
                     .fillMaxSize(),
             ) {
-                ProfileScreen(profileUiState = ProfileViewModel.ProfileUiState()) {
-                }
+                ProfileScreen(
+                    uiState = ProfileViewModel.UiState.Success(users = emptyList()),
+                    onCreateUserClick = { },
+                    onGetAllUsersClick = { },
+                    onDeleteAllUsersClick = { },
+                    onNavigateToEditProfile = {},
+                )
             }
         }
     }

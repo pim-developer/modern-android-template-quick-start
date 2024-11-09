@@ -1,6 +1,7 @@
 package com.renamecompanyname.renameappname.ui.navigation.destinations.home
 
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -44,13 +45,17 @@ fun NavGraphBuilder.homeDestination(
                 haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
 
                 // add onclick here...
-                onNavigateToProfile(viewModel.uiState.value.profileId)
+                onNavigateToProfile("id")
             }
         }
 
-        HomeScreen(
-            homeUiState = viewModel.uiState.value,
-            onNavigateToProfile = onNavigateToProfile,
-        )
+        val uiState = viewModel.uiState.collectAsState()
+
+        when (val state = uiState.value) {
+            HomeViewModel.UiState.Success -> HomeScreen(
+                uiState = state,
+                onNavigateToProfile = onNavigateToProfile,
+            )
+        }
     }
 }

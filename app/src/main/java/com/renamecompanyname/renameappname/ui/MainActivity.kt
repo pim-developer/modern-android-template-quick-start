@@ -129,7 +129,7 @@ fun PreviewRootComposable() {
                     HomeScreenFABButton {
                     }
                 }) {
-                    HomeScreen(homeUiState = HomeViewModel.HomeUiState()) {
+                    HomeScreen(uiState = HomeViewModel.UiState.Success) {
                     }
                 }
             }

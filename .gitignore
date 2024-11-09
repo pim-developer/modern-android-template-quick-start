@@ -32,11 +32,9 @@ google-services.json
 # Android Profiling
 *.hprof
 
-# TODO: remove duplicates:
 /local.properties
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
-local.properties

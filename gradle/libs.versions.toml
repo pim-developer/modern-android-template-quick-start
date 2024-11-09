@@ -10,7 +10,8 @@ lifecycleRuntimeKtx = "2.8.6"
 #==================== Compose & UI ====================
 activityCompose = "1.9.3"
 composeBom = "2024.10.00" # BOM: automatically adds version to androidx.compose dependencies
-navigationCompose = "2.8.3" # TODO: replace when v. >2.8 becomes a stable release!
+navigationCompose = "2.8.3"
+composeCompiler = "1.5.15"
 
 #==================== Dependency Injection ====================
 hiltAndroidGradlePlugin = "2.52"
@@ -27,7 +28,7 @@ espressoCore = "3.6.1"
 kotlinXCoroutines = "1.8.0"
 
 #==================== Database ====================
-mongodbRealmKotlin = "2.1.0"
+mongodbRealmKotlin = "2.3.0"
 
 #==================== Serialization ====================
 kotlinxSerializationJson = "1.7.1"
