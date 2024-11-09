@@ -4,14 +4,13 @@
 #==================== Core ====================
 agp = "8.5.2" #androidGradlePlugin
 kotlin = "2.0.20"
-coreKtx = "1.13.1"
-lifecycleRuntimeKtx = "2.8.6"
+coreKtx = "1.15.0"
+lifecycleRuntimeKtx = "2.8.7"
 
 #==================== Compose & UI ====================
 activityCompose = "1.9.3"
-composeBom = "2024.10.00" # BOM: automatically adds version to androidx.compose dependencies
+composeBom = "2024.10.01" # BOM: automatically adds version to androidx.compose dependencies
 navigationCompose = "2.8.3"
-composeCompiler = "1.5.15"
 
 #==================== Dependency Injection ====================
 hiltAndroidGradlePlugin = "2.52"
@@ -28,7 +27,7 @@ espressoCore = "3.6.1"
 kotlinXCoroutines = "1.8.0"
 
 #==================== Database ====================
-mongodbRealmKotlin = "2.3.0"
+mongodbRealmKotlin = "3.0.0"
 
 #==================== Serialization ====================
 kotlinxSerializationJson = "1.7.1"
