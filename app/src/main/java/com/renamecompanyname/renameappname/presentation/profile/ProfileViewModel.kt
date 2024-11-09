@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.renamecompanyname.renameappname.domain.model.User
 import com.renamecompanyname.renameappname.domain.usecase.CreateUserUseCase
 import com.renamecompanyname.renameappname.domain.usecase.DeleteUserUseCase
+import com.renamecompanyname.renameappname.domain.usecase.FetchSomeDataUseCase
 import com.renamecompanyname.renameappname.domain.usecase.GetAllUsersUseCase
 import com.renamecompanyname.renameappname.presentation.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ constructor(
     private val createUserUseCase: CreateUserUseCase,
     private val getAllUsersUseCase: GetAllUsersUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
+    private val fetchSomeDataUseCase: FetchSomeDataUseCase,
 ) : BaseViewModel<ProfileViewModel.UiState, ProfileViewModel.UiEvent>() {
 
     init {
@@ -37,9 +39,7 @@ constructor(
         }
     }
 
-    override fun initialState(): UiState = UiState.Success(
-        users = emptyList(),
-    )
+    override fun initialState(): UiState = UiState.Success()
 
     override fun onEvent(event: UiEvent) {
         (uiState.value as? UiState.Success)?.let { currentState ->
@@ -78,6 +78,22 @@ constructor(
                         loadUserList()
                     }
                 }
+
+                UiEvent.FetchSomeDataClick -> {
+                    viewModelScope.launch {
+                        mutableUiState.value = UiState.Loading
+                        fetchSomeDataUseCase().fold(
+                            onSuccess = { data ->
+                                mutableUiState.value = currentState.copy(
+                                    fetchedData = data.summary,
+                                )
+                            },
+                            onFailure = { _ ->
+                                mutableUiState.value = UiState.Failure
+                            },
+                        )
+                    }
+                }
             }
         }
     }
@@ -86,11 +102,13 @@ constructor(
         data object CreateUserClick : UiEvent()
         data object GetAllUsersClick : UiEvent()
         data object DeleteAllUsersClick : UiEvent()
+        data object FetchSomeDataClick : UiEvent()
     }
 
     sealed class UiState : BaseUiState {
         data object Loading : UiState()
         data object Failure : UiState()
-        data class Success(val users: List<User>) : UiState()
+        data class Success(val users: List<User> = emptyList(), val fetchedData: String = "") :
+            UiState()
     }
 }

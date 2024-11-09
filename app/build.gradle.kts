@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.mongodb.realm.kotlin)
 
-    kotlin("plugin.serialization").version(libs.versions.kotlin)
+//    kotlin("plugin.serialization").version(libs.versions.kotlin)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ktlint)
 }
@@ -90,7 +91,14 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // ==================== Networking ====================
-    // TODO: add networking dependencies
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.auth)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.okhttp)
+
+    implementation(libs.ktor.ktor.client.android)
 
     // ==================== Database ====================
     // For a free tier online DB with sync capabilities,

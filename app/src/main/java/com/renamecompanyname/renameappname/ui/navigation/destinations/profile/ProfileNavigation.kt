@@ -81,6 +81,10 @@ internal fun NavGraphBuilder.profileDestination(
                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                         viewModel.onEvent(ProfileViewModel.UiEvent.DeleteAllUsersClick)
                     },
+                    onFetchSomeDataClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        viewModel.onEvent(ProfileViewModel.UiEvent.FetchSomeDataClick)
+                    },
                     onNavigateToEditProfile = { onNavigateToEditProfile(profileId) },
                 )
             }

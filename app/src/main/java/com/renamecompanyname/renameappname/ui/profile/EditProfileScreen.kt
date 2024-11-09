@@ -38,9 +38,10 @@ fun EditProfileScreen(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        CustomButton(text = stringResource(id = R.string.navigate_to_profile_btn_text)) {
-            onNavigateToProfile()
-        }
+        CustomButton(
+            text = stringResource(id = R.string.navigate_to_profile_btn_text),
+            onClick = onNavigateToProfile,
+        )
     }
 }
 

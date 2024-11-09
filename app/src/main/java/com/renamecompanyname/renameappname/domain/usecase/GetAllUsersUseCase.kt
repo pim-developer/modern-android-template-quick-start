@@ -1,13 +1,13 @@
 package com.renamecompanyname.renameappname.domain.usecase
 
 import com.renamecompanyname.renameappname.domain.model.User
-import com.renamecompanyname.renameappname.domain.repository.UserRepository
+import com.renamecompanyname.renameappname.domain.repository.LocalUserRepository
 import javax.inject.Inject
 
 class GetAllUsersUseCase @Inject constructor(
-    private val userRepository: UserRepository,
+    private val localUserRepository: LocalUserRepository,
 ) {
     suspend operator fun invoke(): Result<List<User>> {
-        return userRepository.getAllUsers()
+        return localUserRepository.getAllUsers()
     }
 }

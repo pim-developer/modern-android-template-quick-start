@@ -10,13 +10,19 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 
 @Composable
-fun CustomButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+fun CustomButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    containerColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onBackground,
+    contentColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.background,
+) {
     val haptic = LocalHapticFeedback.current
     Button(
-        colors =
-        ButtonDefaults.buttonColors().copy(
-            containerColor = MaterialTheme.colorScheme.onBackground,
-            contentColor = MaterialTheme.colorScheme.background,
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
         ),
         onClick = {
             haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)

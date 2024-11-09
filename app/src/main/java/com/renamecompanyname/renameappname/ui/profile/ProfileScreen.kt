@@ -5,8 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,6 +34,7 @@ fun ProfileScreen(
     onGetAllUsersClick: () -> Unit,
     onDeleteAllUsersClick: () -> Unit,
     onNavigateToEditProfile: () -> Unit,
+    onFetchSomeDataClick: () -> Unit,
 ) {
     Column(
         Modifier
@@ -47,29 +53,43 @@ fun ProfileScreen(
             )
         }
 
-        Spacer(modifier = Modifier.size(16.dp))
-
-        CustomButton(text = "Create User") {
-            onCreateUserClick()
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Text(
+                modifier = Modifier,
+                text = uiState.fetchedData,
+                style = MaterialTheme.typography.bodySmall,
+            )
         }
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        CustomButton(text = "Get All Users") {
-            onGetAllUsersClick()
-        }
+        CustomButton(text = "Create User", onClick = onCreateUserClick)
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        CustomButton(text = "Delete All Users") {
-            onDeleteAllUsersClick()
-        }
+        CustomButton(text = "Get All Users", onClick = onGetAllUsersClick)
 
-        Spacer(modifier = Modifier.size(48.dp))
+        Spacer(modifier = Modifier.size(16.dp))
 
-        CustomButton(text = stringResource(id = R.string.navigate_to_edit_profile_btn_text)) {
-            onNavigateToEditProfile()
-        }
+        CustomButton(text = "Delete All Users", onClick = onDeleteAllUsersClick)
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        CustomButton(text = "Fetch some data", onClick = onFetchSomeDataClick)
+
+        Spacer(modifier = Modifier.size(56.dp))
+
+        CustomButton(
+            text = stringResource(id = R.string.navigate_to_edit_profile_btn_text),
+            onClick = onNavigateToEditProfile,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        )
     }
 }
 
@@ -100,6 +120,7 @@ fun PreviewProfileScreen() {
                     onGetAllUsersClick = { },
                     onDeleteAllUsersClick = { },
                     onNavigateToEditProfile = {},
+                    onFetchSomeDataClick = {},
                 )
             }
         }
