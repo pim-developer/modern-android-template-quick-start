@@ -60,6 +60,7 @@ The project structure is organized as follows (seperation of concerns):
 - **Firebase Crashlytics** _(Planned)_ - For crash reporting.
 - **In-App Updates** - code in ui/utils/AppUpdater.kt 
 - **KtLint** - For code quality.
+- [**Coil**](https://coil-kt.github.io/coil/) - An image loading library for Android backed by Kotlin Coroutines.
 
 
 ### Version Catalog

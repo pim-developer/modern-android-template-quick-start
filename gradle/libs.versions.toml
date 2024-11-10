@@ -41,6 +41,9 @@ ktlint = "12.1.1"
 #==================== Networking ====================
 ktor = "2.3.12"
 
+#==================== Image Loading ====================
+coil = "3.0.2"
+
 [libraries]
 #==================== Core ====================
 # The ktx library for Android provides Kotlin extensions that make Android development
@@ -94,6 +97,8 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

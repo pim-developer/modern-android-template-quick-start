@@ -3,6 +3,7 @@ package com.renamecompanyname.renameappname.ui.profile
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.renamecompanyname.renameappname.R
 import com.renamecompanyname.renameappname.presentation.profile.ProfileViewModel
 import com.renamecompanyname.renameappname.ui.common.CustomButton
@@ -59,11 +61,23 @@ fun ProfileScreen(
                 .height(160.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            Text(
-                modifier = Modifier,
-                text = uiState.fetchedData,
-                style = MaterialTheme.typography.bodySmall,
-            )
+            uiState.fetchedData.forEach {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        modifier = Modifier,
+                        text = it.name,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+
+                    Spacer(Modifier.size(8.dp))
+
+                    AsyncImage(
+                        model = it.flagUrl32,
+                        contentDescription = it.name,
+                        modifier = Modifier.size(48.dp),
+                    )
+                }
+            }
         }
 
         Spacer(modifier = Modifier.size(16.dp))

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class FetchSomeDataUseCase @Inject constructor(
     private val onlineUserRepository: OnlineUserRepository,
 ) {
-    suspend operator fun invoke(): Result<SomeFetchedData> {
+    suspend operator fun invoke(): Result<List<SomeFetchedData>> {
         return onlineUserRepository.fetchSomeData()
     }
 }

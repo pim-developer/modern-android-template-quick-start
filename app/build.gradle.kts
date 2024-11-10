@@ -126,6 +126,10 @@ dependencies {
 
     // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
     implementation(libs.app.update.ktx)
+
+    // ==================== Image Loading ====================
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
 
 // Needed for hilt

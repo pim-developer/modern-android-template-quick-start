@@ -1,6 +1,7 @@
 package com.renamecompanyname.renameappname.presentation.profile
 
 import androidx.lifecycle.viewModelScope
+import com.renamecompanyname.renameappname.domain.model.SomeFetchedData
 import com.renamecompanyname.renameappname.domain.model.User
 import com.renamecompanyname.renameappname.domain.usecase.CreateUserUseCase
 import com.renamecompanyname.renameappname.domain.usecase.DeleteUserUseCase
@@ -85,7 +86,7 @@ constructor(
                         fetchSomeDataUseCase().fold(
                             onSuccess = { data ->
                                 mutableUiState.value = currentState.copy(
-                                    fetchedData = data.summary,
+                                    fetchedData = data,
                                 )
                             },
                             onFailure = { _ ->
@@ -108,7 +109,10 @@ constructor(
     sealed class UiState : BaseUiState {
         data object Loading : UiState()
         data object Failure : UiState()
-        data class Success(val users: List<User> = emptyList(), val fetchedData: String = "") :
+        data class Success(
+            val users: List<User> = emptyList(),
+            val fetchedData: List<SomeFetchedData> = emptyList(),
+        ) :
             UiState()
     }
 }

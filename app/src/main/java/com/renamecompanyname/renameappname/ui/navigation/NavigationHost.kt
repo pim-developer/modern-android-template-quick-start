@@ -7,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navigation
 import com.renamecompanyname.renameappname.ui.navigation.NestedGraphs.ProfileGraph
-import com.renamecompanyname.renameappname.ui.navigation.destinations.home.Home
 import com.renamecompanyname.renameappname.ui.navigation.destinations.home.homeDestination
 import com.renamecompanyname.renameappname.ui.navigation.destinations.home.navigateToHome
 import com.renamecompanyname.renameappname.ui.navigation.destinations.profile.Profile
@@ -31,7 +30,7 @@ fun NavigationHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Home,
+        startDestination = ProfileGraph(""),
     ) {
         homeDestination(
             onNavigateToProfile = { profileId ->
