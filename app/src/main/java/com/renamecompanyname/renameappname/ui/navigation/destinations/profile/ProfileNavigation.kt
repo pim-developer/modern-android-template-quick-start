@@ -4,8 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -37,6 +39,7 @@ internal fun NavController.navigateToProfile(id: String) {
     navigate(route = Profile(id = id))
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 internal fun NavGraphBuilder.profileDestination(
     onNavigateToHome: () -> Unit,
     onNavigateToEditProfile: (id: String) -> Unit,
@@ -67,26 +70,34 @@ internal fun NavGraphBuilder.profileDestination(
 
         when (val state = uiState.value) {
             is ProfileViewModel.UiState.Success -> {
-                ProfileScreen(
-                    uiState = state,
-                    onCreateUserClick = {
+                PullToRefreshBox(
+                    isRefreshing = state.isFetchingDataWithPullToRefresh,
+                    onRefresh = {
                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        viewModel.onEvent(ProfileViewModel.UiEvent.CreateUserClick)
+                        viewModel.onEvent(ProfileViewModel.UiEvent.FetchSomeDataPullToRefresh)
                     },
-                    onGetAllUsersClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        viewModel.onEvent(ProfileViewModel.UiEvent.GetAllUsersClick)
-                    },
-                    onDeleteAllUsersClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        viewModel.onEvent(ProfileViewModel.UiEvent.DeleteAllUsersClick)
-                    },
-                    onFetchSomeDataClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        viewModel.onEvent(ProfileViewModel.UiEvent.FetchSomeDataClick)
-                    },
-                    onNavigateToEditProfile = { onNavigateToEditProfile(profileId) },
-                )
+                ) {
+                    ProfileScreen(
+                        uiState = state,
+                        onCreateUserClick = {
+                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                            viewModel.onEvent(ProfileViewModel.UiEvent.CreateUserClick)
+                        },
+                        onGetAllUsersClick = {
+                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                            viewModel.onEvent(ProfileViewModel.UiEvent.GetAllUsersClick)
+                        },
+                        onDeleteAllUsersClick = {
+                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                            viewModel.onEvent(ProfileViewModel.UiEvent.DeleteAllUsersClick)
+                        },
+                        onFetchSomeDataClick = {
+                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                            viewModel.onEvent(ProfileViewModel.UiEvent.FetchSomeDataClick)
+                        },
+                        onNavigateToEditProfile = { onNavigateToEditProfile(profileId) },
+                    )
+                }
             }
 
             ProfileViewModel.UiState.Failure -> {

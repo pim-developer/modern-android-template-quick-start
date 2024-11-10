@@ -90,6 +90,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Loading Shimmer Effect Library
+    implementation(libs.compose.shimmer)
+
     // ==================== Networking ====================
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.content.negotiation)

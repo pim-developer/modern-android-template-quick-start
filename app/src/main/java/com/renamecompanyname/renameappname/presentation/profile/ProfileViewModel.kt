@@ -10,6 +10,7 @@ import com.renamecompanyname.renameappname.domain.usecase.GetAllUsersUseCase
 import com.renamecompanyname.renameappname.presentation.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -22,25 +23,53 @@ constructor(
     private val fetchSomeDataUseCase: FetchSomeDataUseCase,
 ) : BaseViewModel<ProfileViewModel.UiState, ProfileViewModel.UiEvent>() {
 
+    override fun initialState(): UiState = UiState.Success()
+
     init {
         loadUserList()
+        fetchSomeData(isPullToRefresh = false)
     }
 
     private fun loadUserList() {
         viewModelScope.launch {
-            mutableUiState.value = UiState.Loading
-            getAllUsersUseCase().fold(
-                onSuccess = { users ->
-                    mutableUiState.value = UiState.Success(users = users)
-                },
-                onFailure = { _ ->
-                    mutableUiState.value = UiState.Failure
-                },
-            )
+            (uiState.value as? UiState.Success)?.let { currentState ->
+                mutableUiState.value = currentState.copy(isLoadingUsers = true)
+                getAllUsersUseCase().fold(
+                    onSuccess = { users ->
+                        mutableUiState.value =
+                            currentState.copy(users = users, isLoadingUsers = false)
+                    },
+                    onFailure = { _ ->
+                        mutableUiState.value = UiState.Failure
+                    },
+                )
+            }
         }
     }
 
-    override fun initialState(): UiState = UiState.Success()
+    private fun fetchSomeData(isPullToRefresh: Boolean) {
+        viewModelScope.launch {
+            (uiState.value as? UiState.Success)?.let { currentState ->
+                mutableUiState.value = currentState.copy(
+                    isFetchingData = true,
+                    isFetchingDataWithPullToRefresh = isPullToRefresh,
+                )
+                delay(1000)
+                fetchSomeDataUseCase().fold(
+                    onSuccess = { data ->
+                        mutableUiState.value = currentState.copy(
+                            fetchedData = data,
+                            isFetchingData = false,
+                            isFetchingDataWithPullToRefresh = false,
+                        )
+                    },
+                    onFailure = { _ ->
+                        mutableUiState.value = UiState.Failure
+                    },
+                )
+            }
+        }
+    }
 
     override fun onEvent(event: UiEvent) {
         (uiState.value as? UiState.Success)?.let { currentState ->
@@ -55,11 +84,12 @@ constructor(
                     val randomName = randomNames.random()
                     val newUser = User(name = randomName)
                     viewModelScope.launch {
-                        mutableUiState.value = UiState.Loading
+                        mutableUiState.value = currentState.copy(isCreatingUser = true)
                         createUserUseCase(newUser).fold(
                             onSuccess = { createdUser ->
                                 mutableUiState.value = currentState.copy(
                                     users = currentState.users + createdUser,
+                                    isCreatingUser = false,
                                 )
                             },
                             onFailure = { _ ->
@@ -72,29 +102,17 @@ constructor(
                 UiEvent.GetAllUsersClick -> loadUserList()
                 UiEvent.DeleteAllUsersClick -> {
                     viewModelScope.launch {
-                        mutableUiState.value = UiState.Loading
+                        mutableUiState.value = currentState.copy(isDeletingUsers = true)
                         currentState.users.forEach { user ->
                             deleteUserUseCase(user)
                         }
+                        mutableUiState.value = currentState.copy(isDeletingUsers = false)
                         loadUserList()
                     }
                 }
 
-                UiEvent.FetchSomeDataClick -> {
-                    viewModelScope.launch {
-                        mutableUiState.value = UiState.Loading
-                        fetchSomeDataUseCase().fold(
-                            onSuccess = { data ->
-                                mutableUiState.value = currentState.copy(
-                                    fetchedData = data,
-                                )
-                            },
-                            onFailure = { _ ->
-                                mutableUiState.value = UiState.Failure
-                            },
-                        )
-                    }
-                }
+                UiEvent.FetchSomeDataClick -> fetchSomeData(isPullToRefresh = false)
+                UiEvent.FetchSomeDataPullToRefresh -> fetchSomeData(isPullToRefresh = true)
             }
         }
     }
@@ -104,6 +122,7 @@ constructor(
         data object GetAllUsersClick : UiEvent()
         data object DeleteAllUsersClick : UiEvent()
         data object FetchSomeDataClick : UiEvent()
+        data object FetchSomeDataPullToRefresh : UiEvent()
     }
 
     sealed class UiState : BaseUiState {
@@ -112,6 +131,11 @@ constructor(
         data class Success(
             val users: List<User> = emptyList(),
             val fetchedData: List<SomeFetchedData> = emptyList(),
+            val isCreatingUser: Boolean = false,
+            val isLoadingUsers: Boolean = false,
+            val isDeletingUsers: Boolean = false,
+            val isFetchingData: Boolean = false,
+            val isFetchingDataWithPullToRefresh: Boolean = false,
         ) :
             UiState()
     }

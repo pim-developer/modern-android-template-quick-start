@@ -45,6 +45,7 @@ Based on the [Official Android Documentation](https://developer.android.com/topi
 - **In-App Updates** - code in ui/utils/AppUpdater.kt 
 - **KtLint** - For code quality.
 - [**Coil**](https://coil-kt.github.io/coil/) - An image loading library for Android backed by Kotlin Coroutines.
+- [**Compose Shimmer**](https://github.com/valentinilk/compose-shimmer) - A shimmer loading effect for composables
 
 ## 🤝 Contribute to this Project 
 

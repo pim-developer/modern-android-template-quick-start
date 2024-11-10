@@ -2,6 +2,7 @@ package com.renamecompanyname.renameappname.ui.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,9 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,6 +31,7 @@ import com.renamecompanyname.renameappname.R
 import com.renamecompanyname.renameappname.presentation.profile.ProfileViewModel
 import com.renamecompanyname.renameappname.ui.common.CustomButton
 import com.renamecompanyname.renameappname.ui.theme.RenameTheme
+import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun ProfileScreen(
@@ -42,17 +46,22 @@ fun ProfileScreen(
         Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        uiState.users.forEach {
-            Text(
-                modifier = Modifier,
-                text = "name: ${it.name}, id: ${it.id}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+        if (uiState.isLoadingUsers) {
+            CircularProgressIndicator()
+        } else {
+            uiState.users.forEach {
+                Text(
+                    modifier = Modifier,
+                    text = "name: ${it.name}, id: ${it.id}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
         }
 
         Card(
@@ -61,21 +70,53 @@ fun ProfileScreen(
                 .height(160.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            uiState.fetchedData.forEach {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        modifier = Modifier,
-                        text = it.name,
-                        style = MaterialTheme.typography.bodySmall,
+            if (uiState.isFetchingData) {
+                Row(
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .shimmer()
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .height(24.dp)
+                            .width(48.dp)
+                            .background(color = MaterialTheme.colorScheme.outlineVariant),
                     )
 
                     Spacer(Modifier.size(8.dp))
 
-                    AsyncImage(
-                        model = it.flagUrl32,
-                        contentDescription = it.name,
-                        modifier = Modifier.size(48.dp),
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(color = MaterialTheme.colorScheme.outlineVariant),
                     )
+                }
+            } else {
+                uiState.fetchedData.forEach {
+                    Row(
+                        modifier = Modifier
+                            .padding(12.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            modifier = Modifier,
+                            text = it.name,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+
+                        Spacer(Modifier.size(8.dp))
+
+                        AsyncImage(
+                            model = it.flagUrl32,
+                            contentDescription = it.name,
+                            modifier = Modifier.size(48.dp),
+                        )
+                    }
                 }
             }
         }
@@ -84,6 +125,11 @@ fun ProfileScreen(
 
         CustomButton(text = "Create User", onClick = onCreateUserClick)
 
+        if (uiState.isCreatingUser) {
+            Spacer(modifier = Modifier.size(4.dp))
+            CircularProgressIndicator()
+        }
+
         Spacer(modifier = Modifier.size(16.dp))
 
         CustomButton(text = "Get All Users", onClick = onGetAllUsersClick)
@@ -91,6 +137,12 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.size(16.dp))
 
         CustomButton(text = "Delete All Users", onClick = onDeleteAllUsersClick)
+
+        if (uiState.isDeletingUsers) {
+            Spacer(modifier = Modifier.size(4.dp))
+
+            CircularProgressIndicator()
+        }
 
         Spacer(modifier = Modifier.size(16.dp))
 
